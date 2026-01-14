@@ -148,4 +148,26 @@ class ProductController extends Controller
         //return response
         return new ProductResource(true, 'Data Product Berhasil Diubah!', $product);
     }
+
+    /**
+     * destroy
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function destroy($id)
+    {
+
+        //find product by ID
+        $product = Product::find($id);
+
+        //delete image
+        Storage::delete('products/'.basename($product->image));
+
+        //delete product
+        $product->delete();
+
+        //return response
+        return new ProductResource(true, 'Data Product Berhasil Dihapus!', null);
+    }
 }
